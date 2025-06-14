@@ -1,6 +1,0 @@
-import streamlit as st
-
-st.set_page_config(page_title="DevFlow", page_icon="🚀", layout="wide")
-
-st.title("Bienvenido a DevFlow")
-st.markdown("**Movilización fluida de recursos para la industria de la construcción, optimizada con AI y datos.**")
