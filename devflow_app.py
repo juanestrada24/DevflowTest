@@ -1,5 +1,5 @@
 # DevFlow App - Página Principal
-
+```python name=devflow_app.py
 import streamlit as st
 
 # Configuración de la página
@@ -9,7 +9,7 @@ st.set_page_config(
     layout="wide"
 )
 
-# Inyectar CSS personalizado y botón hamburguesa con JS para mostrar/ocultar el menú lateral
+# CSS personalizado para estilos visuales, pero SIN ocultar el menú lateral
 st.markdown("""
     <style>
         .stApp {
@@ -37,63 +37,8 @@ st.markdown("""
             margin-bottom: 2em;
             box-shadow: 0 4px 16px #1b263b22;
         }
-        /* Ocultar menú lateral por defecto */
-        [data-testid="stSidebarNav"] {
-            display: none;
-        }
-        /* Botón hamburguesa */
-        .hamburger {
-            position: fixed;
-            top: 2rem;
-            left: 2rem;
-            z-index: 9999;
-            cursor: pointer;
-            width: 48px;
-            height: 48px;
-            background: #ffffffcc;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px #2222;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background 0.2s;
-        }
-        .hamburger:hover {
-            background: #e0e7efcc;
-        }
-        .hamburger span, .hamburger span:before, .hamburger span:after {
-            content: '';
-            display: block;
-            background: #1b263b;
-            height: 4px;
-            width: 30px;
-            border-radius: 2px;
-            margin: 0 auto;
-            transition: 0.3s;
-            position: relative;
-        }
-        .hamburger span:before, .hamburger span:after {
-            position: absolute;
-            left: 0;
-        }
-        .hamburger span:before {
-            top: -10px;
-        }
-        .hamburger span:after {
-            top: 10px;
-        }
+        /* NO ocultar el menú lateral para que aparezcan las páginas */
     </style>
-    <script>
-        function toggleSidebar() {
-            const sidebar = parent.document.querySelector('[data-testid="stSidebar"]');
-            if (sidebar) {
-                sidebar.style.display = sidebar.style.display === 'none' ? 'block' : 'none';
-            }
-        }
-    </script>
-    <div class="hamburger" onclick="toggleSidebar()">
-        <span></span>
-    </div>
 """, unsafe_allow_html=True)
 
 # Título principal y subtítulo con estilos
@@ -107,3 +52,5 @@ st.markdown(
 )
 
 # Continúa con el resto de tu app aquí...
+```
+Ahora, el menú lateral de Streamlit (incluyendo el de pages, si usas la carpeta `pages/`) volverá a aparecer y funcionar normalmente.
