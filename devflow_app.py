@@ -1,5 +1,4 @@
 # DevFlow App - Página Principal
-python name=devflow_app.py
 import streamlit as st
 
 # Configuración de la página
