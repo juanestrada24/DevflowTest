@@ -1,7 +1,6 @@
 # DevFlow App - Página Principal
 
-```python name=devflow_app.py
-import streamlit as st
+`import streamlit as st
 
 # Configuración de la página
 st.set_page_config(
@@ -108,4 +107,3 @@ st.markdown(
 )
 
 # Continúa con el resto de tu app aquí...
-```
