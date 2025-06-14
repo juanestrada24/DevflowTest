@@ -1,6 +1,6 @@
 # DevFlow App - Página Principal
 
-`import streamlit as st
+import streamlit as st
 
 # Configuración de la página
 st.set_page_config(
