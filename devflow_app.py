@@ -36,5 +36,3 @@ st.markdown('<div class="main-title">Bienvenido a DevFlow</div>', unsafe_allow_h
 st.markdown('<div class="subtitle">Dealflow y recursos para constructores</div>', unsafe_allow_html=True)
 
 # Continúa con el resto de tu app aquí...
-```
-Ahora tendrás un fondo azul oscuro y el menú lateral de Streamlit activo, sin imagen destacada.
