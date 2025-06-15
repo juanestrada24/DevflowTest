@@ -180,7 +180,7 @@ beds = 3              # idem
 
 st.markdown(
     f"""
-    <div style="font-size: 12px; color: #AAAAAA; margin-top: -10px; margin-bottom: 25px;">
+    <div style="font-size: 14px; color: #AAAAAA; margin-top: -10px; margin-bottom: 25px;">
         <strong>Asking price/sqft:</strong> ${asking_price_sqft:,.2f} &nbsp;|&nbsp;
         <strong>ARV/sqft:</strong> ${arv_sqft:,.2f} &nbsp;|&nbsp;
         <strong>Lot size:</strong> {lot_size_sqft:,} sqft &nbsp;|&nbsp;
