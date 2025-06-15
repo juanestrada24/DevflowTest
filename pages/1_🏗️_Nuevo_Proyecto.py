@@ -2,7 +2,7 @@
 import streamlit as st
 
 # Configuración de la página
-st.set_page_config(page_title="Nuevo Proyecto", layout="wide")
+st.set_page_config(page_title="New Project", layout="wide")
 
 # --- ESTILO DARK UI CORPORATIVO ---
 st.markdown(
@@ -76,7 +76,7 @@ with st.form(key="form_nuevo_proyecto"):
         renta_mensual = st.number_input("Renta mensual esperada", min_value=0.0, value=0.0, step=100.0)
         ocupacion = st.number_input("Ocupación estimada (%)", min_value=0.0, max_value=100.0, value=0.0, step=1.0)
 
-    submit = st.form_submit_button("📊 Evaluar Oportunidad")
+    submit = st.form_submit_button("Check Deal")
 
 if submit:
     # Guardar datos en session_state
