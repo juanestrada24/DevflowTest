@@ -196,3 +196,5 @@ col_a, col_b = st.columns([2, 2])
 col_a.button("📤 Share")
 col_b.button("🤝 Invite colleages")
 col_a.button("📑 Add to pipeline")
+col_b.button("📞 Schedule call")
+
