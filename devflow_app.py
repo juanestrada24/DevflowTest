@@ -22,11 +22,17 @@ st.markdown("""
             margin-bottom: 0.5em;
             font-weight: bold;
         }
-        .subtitle {
+        .subtitle, .intro-text {
             text-align: center;
             color: #bcdff1;
             font-size: 1.5rem;
             margin-bottom: 2em;
+        }
+        .intro-text {
+            color: #e0e6ed;
+            font-size: 1.2rem;
+            margin-bottom: 2em;
+            font-weight: 400;
         }
         /* NO ocultar el menú lateral para que aparezcan las páginas */
     </style>
@@ -34,7 +40,20 @@ st.markdown("""
 
 # Título principal y subtítulo con estilos
 st.markdown('<div class="main-title">DevFlow</div>', unsafe_allow_html=True)
-st.markdown('<div class="subtitle">Moviliza tus recursos con inteligencia</div>', unsafe_allow_html=True)
+st.markdown('<div class="subtitle">DealFlow para constructores e inversores</div>', unsafe_allow_html=True)
+
+# Texto de introducción
+intro = """
+Underwriting efectivo para movilizar recursos en la<br>
+industría de la construcción, optimizada<br>
+por inteligencia artifícial y datos.<br>
+<ul style='text-align:center; list-style-position: inside; color: #e0e6ed; font-size: 1.1rem;'>
+<li>Automatizamos el análisis financiero de tus proyectos</li>
+<li>Comparte oportunidades con profesionales clave de la industria</li>
+<li>Coordina la ejecución con flujos colaborativos y seguimiento en tiempo real</li>
+</ul>
+"""
+st.markdown(f'<div class="intro-text">{intro}</div>', unsafe_allow_html=True)
 
 # Formulario de entrada
 st.sidebar.header("📋 Datos del Proyecto")
@@ -63,71 +82,3 @@ if submitted:
     interes_prestamo = financiado * (tasa_prestamo / 100) * (meses / 12)
     interes_gap = gap * (tasa_gap / 100) * (meses / 12)
     gastos_cierre_val = precio_compra * (gastos_cierre / 100)
-    total_inversion = precio_compra + renovacion + comision_total + interes_prestamo + interes_gap + gastos_cierre_val
-    upside = arv - total_inversion
-    roi = (upside / gap) * 100 if gap > 0 else 0
-    roi_anual = roi * (12 / meses) if meses > 0 else 0
-    equity_multiple = (upside + gap) / gap if gap > 0 else 0
-
-    # Métricas básicas en encabezado
-    st.markdown(
-        f"""
-        <div style="font-size:0.95em; color: #bcdff1; margin-bottom: 0.7em; text-align:center;">
-        <b>Dirección:</b> {direccion if direccion else "-"} &nbsp; | &nbsp;
-        <b>Precio de compra:</b> ${precio_compra:,.0f} &nbsp; | &nbsp;
-        <b>Costo de renovación:</b> ${renovacion:,.0f} &nbsp; | &nbsp;
-        <b>ARV:</b> ${arv:,.0f} &nbsp; | &nbsp;
-        <b>ROI inversionista:</b> {roi:.1f}% &nbsp; | &nbsp;
-        <b>ROI anualizado:</b> {roi_anual:.1f}% &nbsp; | &nbsp;
-        <b>Equity Multiple:</b> {equity_multiple:.2f} &nbsp; | &nbsp;
-        <b>Tiempo de ejecución:</b> {meses} meses
-        </div>
-        <hr>
-        """, unsafe_allow_html=True
-    )
-
-    # Métricas principales
-    col1, col2 = st.columns(2)
-    with col1:
-        st.metric("ARV", f"${arv:,.0f}")
-        st.metric("Costo Total", f"${total_inversion:,.0f}")
-        st.metric("Upside", f"${upside:,.0f}")
-        st.metric("ROI", f"{roi:.1f}%")
-    with col2:
-        st.metric("Interés Préstamo", f"${interes_prestamo:,.0f}")
-        st.metric("Interés GAP", f"${interes_gap:,.0f}")
-        st.metric("ROI Anualizado", f"{roi_anual:.1f}%")
-        st.metric("Equity Multiple", f"{equity_multiple:.2f}")
-
-    # Estado de resultados (tabla breakdown)
-    breakdown_data = {
-        "Concepto": [
-            "Precio de compra",
-            "Costo de renovación",
-            "Comisión de venta",
-            "Interés préstamo",
-            "Interés GAP",
-            "Gastos de cierre",
-            "Total inversión",
-            "ARV",
-            "Upside (ganancia)"
-        ],
-        "Monto": [
-            precio_compra,
-            renovacion,
-            comision_total,
-            interes_prestamo,
-            interes_gap,
-            gastos_cierre_val,
-            total_inversion,
-            arv,
-            upside
-        ]
-    }
-    df_breakdown = pd.DataFrame(breakdown_data)
-    df_breakdown["Monto"] = df_breakdown["Monto"].apply(lambda x: f"${x:,.0f}")
-    st.markdown("### Estado de resultados del ejercicio")
-    st.table(df_breakdown)
-
-    st.success("✅ Análisis generado con éxito.")
-    st.info("En próximas versiones podrás compartir este análisis con aliados o exportar como PDF.")
