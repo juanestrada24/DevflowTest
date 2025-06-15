@@ -192,7 +192,7 @@ st.markdown(
 )
 
 # --- Botones de acción ---
-col_a, col_b = st.columns([2, 1])
+col_a, col_b = st.columns([2, 2])
 col_a.button("📤 Compartir oportunidad")
 col_b.button("🤝 Invitar colegas")
-col_a.button("📤 Adicionar a pipeline")
+col_a.button("📑 Adicionar a pipeline")
