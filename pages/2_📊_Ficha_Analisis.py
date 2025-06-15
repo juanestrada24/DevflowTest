@@ -69,7 +69,7 @@ st.markdown(
         /* Botón azul neutro Devflow */
         .stButton > button {
             background-color: #2471A3 !important;  /* Azul más neutro, acorde a Devflow */
-            color: #0D33B3 !important;
+            color: #FFFFFF !important;
             font-weight: bold;
             padding: 0.6rem 1.2rem;
             border-radius: 5px;
@@ -78,7 +78,7 @@ st.markdown(
             transition: background 0.2s;
         }
         .stButton > button:hover {
-            background-color: #156091 !important;
+            background-color: #0000FF !important;
         }
     </style>
     """,
