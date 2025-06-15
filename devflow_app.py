@@ -44,9 +44,8 @@ st.markdown('<div class="subtitle">DealFlow para constructores e inversores</div
 
 # Texto de introducción
 intro = """
-Underwriting efectivo para movilizar recursos en la<br>
-industría de la construcción, optimizada<br>
-por inteligencia artifícial y datos.<br>
+Real Estate Deals Underwriting On The Go <br>
+inteligencia artifícial y datos.<br>
 <ul style='text-align:center; list-style-position: inside; color: #e0e6ed; font-size: 1.1rem;'>
 <li>Automatizamos el análisis financiero de tus proyectos</li>
 <li>Comparte oportunidades con profesionales clave de la industria</li>
