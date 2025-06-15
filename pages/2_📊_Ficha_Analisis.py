@@ -96,6 +96,7 @@ with col_a:
 with col_b:
     st.button("🤝 Invitar colegas")
     if submit:
+   # ... (todo el código anterior igual)     
     # Guardar datos en session_state
     st.session_state["inputs"] = {
         "precio_compra": precio_compra,
