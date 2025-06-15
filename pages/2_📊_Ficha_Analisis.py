@@ -5,7 +5,7 @@ st.set_page_config(page_title="Ficha de Análisis", layout="wide")
 
 # --- Validación de inputs ---
 if "inputs" not in st.session_state:
-    st.error("⚠️ No se han ingresado datos. Por favor, complete el formulario en 'Nuevo Proyecto'.")
+    st.error("⚠️ No se han ingresado datos. Por favor, complete el formulario en 'New Flip'.")
     st.stop()
 
 # --- Cargar datos del formulario ---
