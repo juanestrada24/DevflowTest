@@ -83,19 +83,74 @@ st.markdown(
 )
 
 # --- KPIs Principales ---
+# --- KPIs Principales en grid de 3 columnas con fuente más pequeña y ROI en verde limón ---
 st.title("📊 Ficha de Inversión")
 
-col1, col2, col3 = st.columns(3)
-col1.markdown(f'<div class="card"><div class="metric-label">Valor de Compra</div><div class="metric-value">${precio_compra:,.0f}</div></div>', unsafe_allow_html=True)
-col2.markdown(f'<div class="card"><div class="metric-label">ARV</div><div class="metric-value">${arv:,.0f}</div></div>', unsafe_allow_html=True)
-col3.markdown(f'<div class="card"><div class="metric-label">Duración</div><div class="metric-value">{meses} meses</div></div>', unsafe_allow_html=True)
-
-col4, col5, col6 = st.columns(3)
-col4.markdown(f'<div class="card"><div class="metric-label">ROI Inversionista</div><div class="metric-value">{roi_inversionista:.1%}</div></div>', unsafe_allow_html=True)
-col5.markdown(f'<div class="card"><div class="metric-label">ROI Proyecto</div><div class="metric-value">{roi_proyecto:.1%}</div></div>', unsafe_allow_html=True)
-col6.markdown(f'<div class="card"><div class="metric-label">Equity Multiple</div><div class="metric-value">{equity_multiple:.2f}x</div></div>', unsafe_allow_html=True)
-
-st.markdown("---")
+st.markdown(
+    """
+    <style>
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+        .kpi-card {
+            background-color: #1C2F40;
+            border-radius: 8px;
+            padding: 1.2rem 0.8rem;
+            text-align: center;
+            border: 1px solid #35526F;
+        }
+        .kpi-label {
+            font-size: 12px;
+            color: #AAAAAA;
+            margin-bottom: 4px;
+        }
+        .kpi-value {
+            font-size: 22px;
+            font-weight: bold;
+            margin-top: 2px;
+        }
+        .kpi-lime {
+            color: #BFFF00;
+        }
+    </style>
+    <div class="kpi-grid">
+        <div class="kpi-card">
+            <div class="kpi-label">Valor de Compra</div>
+            <div class="kpi-value">${:,.0f}</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-label">ARV</div>
+            <div class="kpi-value">${:,.0f}</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-label">Duración</div>
+            <div class="kpi-value">{} meses</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-label">ROI Inversionista</div>
+            <div class="kpi-value kpi-lime">{:.1%}</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-label">ROI Proyecto</div>
+            <div class="kpi-value kpi-lime">{:.1%}</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-label">Equity Multiple</div>
+            <div class="kpi-value">{:.2f}x</div>
+        </div>
+    </div>
+    """.format(
+        precio_compra,
+        arv,
+        meses,
+        roi_inversionista,
+        roi_proyecto,
+        equity_multiple
+    ),
+    unsafe_allow_html=True)
 
 # --- Tabla tipo estado de resultados ---
 st.subheader("🧾 Estado Financiero del Proyecto")
