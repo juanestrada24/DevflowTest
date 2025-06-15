@@ -1,4 +1,5 @@
 # Página: Ficha de Análisis
+# Página: Ficha de Análisis
 import streamlit as st
 
 # --- Configuración de página ---
@@ -95,21 +96,3 @@ with col_a:
     st.button("📤 Compartir oportunidad")
 with col_b:
     st.button("🤝 Invitar colegas")
-    if submit:
-   # ... (todo el código anterior igual)     
-    # Guardar datos en session_state
-    st.session_state["inputs"] = {
-        "precio_compra": precio_compra,
-        "arv": arv,
-        "renovacion": renovacion,
-        "comision": comision,
-        "tasa_prestamo": tasa_prestamo,
-        "porcentaje_financiado": porcentaje_financiado,
-        "tasa_gap": tasa_gap,
-        "meses": meses,
-        "renta_mensual": renta_mensual,
-        "ocupacion": ocupacion,
-        "gastos_cierre": gastos_cierre
-    }
-    # Redirigir automáticamente a la página de análisis
-    st.switch_page("pages/2_📊_Ficha_Analisis.py")
