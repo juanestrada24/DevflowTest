@@ -82,9 +82,8 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# --- KPIs Principales ---
 # --- KPIs Principales en grid de 3 columnas con fuente más pequeña y ROI en verde limón ---
-st.title("📊 Ficha de Inversión")
+st.title("2_📊_Analisis.py")
 
 st.markdown(
     """
