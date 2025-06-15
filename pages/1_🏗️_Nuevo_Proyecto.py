@@ -52,7 +52,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-st.title("📝 Nuevo Proyecto de Inversión")
+st.title(" Nuevo Proyecto de Inversión")
 st.markdown("Ingresa los datos clave para evaluar la oportunidad de inversión.")
 
 with st.form(key="form_nuevo_proyecto"):
