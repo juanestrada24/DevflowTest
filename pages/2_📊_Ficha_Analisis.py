@@ -39,7 +39,7 @@ roi_proyecto = upside / total_costos
 roi_inversionista = (interes_gap + (upside / 2)) / gap_inversion
 equity_multiple = 1 + roi_inversionista
 
-# --- Estilos dark UI ---
+# --- Estilos dark UI y botones customizados ---
 st.markdown(
     """
     <style>
@@ -66,16 +66,19 @@ st.markdown(
             padding: 8px 16px;
             border-bottom: 1px solid #3A4A5F;
         }
-        .stButton>button {
-            background-color: #007FFF;
-            color: white;
+        /* Botón azul neutro Devflow */
+        .stButton > button {
+            background-color: #2471A3 !important;  /* Azul más neutro, acorde a Devflow */
+            color: #fff !important;
             font-weight: bold;
             padding: 0.6rem 1.2rem;
             border-radius: 5px;
             margin-right: 10px;
+            border: none;
+            transition: background 0.2s;
         }
-        .stButton>button:hover {
-            background-color: #00A4FF;
+        .stButton > button:hover {
+            background-color: #156091 !important;
         }
     </style>
     """,
@@ -167,6 +170,26 @@ st.markdown(f"""
 """, unsafe_allow_html=True)
 
 st.markdown("---")
+
+# --- Valores de texto adicionales debajo de la tabla ---
+asking_price_sqft = precio_compra / 1500  # Suponiendo 1500 sqft (ajústalo según tu contexto)
+arv_sqft = arv / 1500
+lot_size_sqft = 5000  # puedes traerlo como campo adicional luego
+units = 1             # idem
+beds = 3              # idem
+
+st.markdown(
+    f"""
+    <div style="font-size: 12px; color: #AAAAAA; margin-top: -10px; margin-bottom: 25px;">
+        <strong>Asking price/sqft:</strong> ${asking_price_sqft:,.2f} &nbsp;|&nbsp;
+        <strong>ARV/sqft:</strong> ${arv_sqft:,.2f} &nbsp;|&nbsp;
+        <strong>Lot size:</strong> {lot_size_sqft:,} sqft &nbsp;|&nbsp;
+        <strong>Units:</strong> {units} &nbsp;|&nbsp;
+        <strong>Beds:</strong> {beds}
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
 # --- Botones de acción ---
 col_a, col_b = st.columns([1, 1])
