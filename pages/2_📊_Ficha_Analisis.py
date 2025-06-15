@@ -1,25 +1,57 @@
 # Página: Ficha de Análisis
-# Página: Ficha de Análisis
 import streamlit as st
 
-# --- Configuración de página ---
 st.set_page_config(page_title="Ficha de Análisis", layout="wide")
 
-# --- Estilo DARK UI tipo Exchange ---
+# --- Validación de inputs ---
+if "inputs" not in st.session_state:
+    st.error("⚠️ No se han ingresado datos. Por favor, complete el formulario en 'Nuevo Proyecto'.")
+    st.stop()
+
+# --- Cargar datos del formulario ---
+data = st.session_state["inputs"]
+precio_compra = data["precio_compra"]
+arv = data["arv"]
+renovacion = data["renovacion"]
+comision = data["comision"]
+tasa_prestamo = data["tasa_prestamo"]
+porcentaje_financiado = data["porcentaje_financiado"]
+tasa_gap = data["tasa_gap"]
+meses = data["meses"]
+renta_mensual = data["renta_mensual"]
+ocupacion = data["ocupacion"]
+gastos_cierre = data["gastos_cierre"]
+
+# --- Cálculos ---
+comision_venta = arv * (comision / 100)
+monto_prestamo = precio_compra * (porcentaje_financiado / 100)
+downpayment = precio_compra - monto_prestamo
+gap_inversion = downpayment + renovacion
+interes_prestamo = monto_prestamo * (tasa_prestamo / 100) * (meses / 12)
+interes_gap = gap_inversion * (tasa_gap / 100) * (meses / 12)
+cierre = precio_compra * (gastos_cierre / 100)
+total_costos = precio_compra + renovacion + comision_venta + interes_prestamo + interes_gap + cierre
+upside = arv - total_costos
+
+# ROI Proyecto
+roi_proyecto = upside / total_costos
+# ROI Inversionista
+roi_inversionista = (interes_gap + (upside / 2)) / gap_inversion
+equity_multiple = 1 + roi_inversionista
+
+# --- Estilos dark UI ---
 st.markdown(
     """
     <style>
         .block-container {
             background-color: #0B1C2C;
             color: #FFFFFF;
-            padding: 2rem;
         }
         .card {
             background-color: #1C2F40;
             border-radius: 8px;
             padding: 1.5rem;
             text-align: center;
-            color: #FFFFFF;
             border: 1px solid #35526F;
         }
         .metric-label {
@@ -50,41 +82,33 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# --- Título ---
+# --- KPIs Principales ---
 st.title("📊 Ficha de Inversión")
-st.markdown("Análisis financiero del proyecto.")
 
-# --- KPIs principales (hardcoded) ---
 col1, col2, col3 = st.columns(3)
-with col1:
-    st.markdown('<div class="card"><div class="metric-label">Valor de Compra</div><div class="metric-value">$525,000</div></div>', unsafe_allow_html=True)
-with col2:
-    st.markdown('<div class="card"><div class="metric-label">ARV</div><div class="metric-value">$750,000</div></div>', unsafe_allow_html=True)
-with col3:
-    st.markdown('<div class="card"><div class="metric-label">Duración</div><div class="metric-value">3 meses</div></div>', unsafe_allow_html=True)
+col1.markdown(f'<div class="card"><div class="metric-label">Valor de Compra</div><div class="metric-value">${precio_compra:,.0f}</div></div>', unsafe_allow_html=True)
+col2.markdown(f'<div class="card"><div class="metric-label">ARV</div><div class="metric-value">${arv:,.0f}</div></div>', unsafe_allow_html=True)
+col3.markdown(f'<div class="card"><div class="metric-label">Duración</div><div class="metric-value">{meses} meses</div></div>', unsafe_allow_html=True)
 
 col4, col5, col6 = st.columns(3)
-with col4:
-    st.markdown('<div class="card"><div class="metric-label">ROI Inversionista</div><div class="metric-value">30.5%</div></div>', unsafe_allow_html=True)
-with col5:
-    st.markdown('<div class="card"><div class="metric-label">ROI Proyecto</div><div class="metric-value">43.6%</div></div>', unsafe_allow_html=True)
-with col6:
-    st.markdown('<div class="card"><div class="metric-label">Equity Multiple</div><div class="metric-value">1.30x</div></div>', unsafe_allow_html=True)
+col4.markdown(f'<div class="card"><div class="metric-label">ROI Inversionista</div><div class="metric-value">{roi_inversionista:.1%}</div></div>', unsafe_allow_html=True)
+col5.markdown(f'<div class="card"><div class="metric-label">ROI Proyecto</div><div class="metric-value">{roi_proyecto:.1%}</div></div>', unsafe_allow_html=True)
+col6.markdown(f'<div class="card"><div class="metric-label">Equity Multiple</div><div class="metric-value">{equity_multiple:.2f}x</div></div>', unsafe_allow_html=True)
 
 st.markdown("---")
 
-# --- Estado de resultados (tabla simulada) ---
+# --- Tabla tipo estado de resultados ---
 st.subheader("🧾 Estado Financiero del Proyecto")
-st.markdown("""
+st.markdown(f"""
 <table class="table-style">
-<tr><td>ARV (valor de reventa)</td><td>$750,000</td></tr>
-<tr><td>Precio de compra</td><td>$525,000</td></tr>
-<tr><td>Costo de renovación</td><td>$50,000</td></tr>
-<tr><td>Comisión de venta (5%)</td><td>$37,500</td></tr>
-<tr><td>Intereses préstamo (3 meses a 12%)</td><td>$11,025</td></tr>
-<tr><td>Intereses GAP (3 meses a 10%)</td><td>$3,862</td></tr>
-<tr><td>Gastos de cierre (1.5%)</td><td>$7,875</td></tr>
-<tr><td><strong>Upside (ganancia neta)</strong></td><td><strong>$115,738</strong></td></tr>
+<tr><td>ARV (valor de reventa)</td><td>${arv:,.0f}</td></tr>
+<tr><td>Precio de compra</td><td>${precio_compra:,.0f}</td></tr>
+<tr><td>Costo de renovación</td><td>${renovacion:,.0f}</td></tr>
+<tr><td>Comisión de venta ({comision}%)</td><td>${comision_venta:,.0f}</td></tr>
+<tr><td>Intereses préstamo</td><td>${interes_prestamo:,.0f}</td></tr>
+<tr><td>Intereses GAP</td><td>${interes_gap:,.0f}</td></tr>
+<tr><td>Gastos de cierre ({gastos_cierre}%)</td><td>${cierre:,.0f}</td></tr>
+<tr><td><strong>Upside (ganancia neta)</strong></td><td><strong>${upside:,.0f}</strong></td></tr>
 </table>
 """, unsafe_allow_html=True)
 
@@ -92,7 +116,5 @@ st.markdown("---")
 
 # --- Botones de acción ---
 col_a, col_b = st.columns([1, 1])
-with col_a:
-    st.button("📤 Compartir oportunidad")
-with col_b:
-    st.button("🤝 Invitar colegas")
+col_a.button("📤 Compartir oportunidad")
+col_b.button("🤝 Invitar colegas")
