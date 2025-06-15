@@ -2,7 +2,7 @@
 import streamlit as st
 
 # Configuración de la página
-st.set_page_config(page_title="New Project", layout="wide")
+st.set_page_config(page_title="1_🏗️_Nuevo_Proyecto.py", layout="wide")
 
 # --- ESTILO DARK UI CORPORATIVO ---
 st.markdown(
@@ -52,7 +52,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-st.title(" Nuevo Proyecto")
+st.title(" New Project")
 st.markdown("Ingresa los datos clave para evaluar la oportunidad de inversión.")
 
 with st.form(key="form_nuevo_proyecto"):
