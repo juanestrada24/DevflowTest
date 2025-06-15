@@ -69,7 +69,7 @@ st.markdown(
         /* Botón azul neutro Devflow */
         .stButton > button {
             background-color: #2471A3 !important;  /* Azul más neutro, acorde a Devflow */
-            color: #fff !important;
+            color: #0D33B3 !important;
             font-weight: bold;
             padding: 0.6rem 1.2rem;
             border-radius: 5px;
