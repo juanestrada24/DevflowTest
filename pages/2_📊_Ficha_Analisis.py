@@ -88,32 +88,32 @@ st.title("2_📊_Analisis.py")
 st.markdown(
     """
     <style>
-        .kpi-grid {
+        .kpi-grid {{
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 24px;
             margin-bottom: 32px;
-        }
-        .kpi-card {
+        }}
+        .kpi-card {{
             background-color: #1C2F40;
             border-radius: 8px;
             padding: 1.2rem 0.8rem;
             text-align: center;
             border: 1px solid #35526F;
-        }
-        .kpi-label {
+        }}
+        .kpi-label {{
             font-size: 12px;
             color: #AAAAAA;
             margin-bottom: 4px;
-        }
-        .kpi-value {
+        }}
+        .kpi-value {{
             font-size: 22px;
             font-weight: bold;
             margin-top: 2px;
-        }
-        .kpi-lime {
+        }}
+        .kpi-lime {{
             color: #BFFF00;
-        }
+        }}
     </style>
     <div class="kpi-grid">
         <div class="kpi-card">
