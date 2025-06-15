@@ -94,4 +94,4 @@ if submit:
         "gastos_cierre": gastos_cierre
     }
     # Redirigir automáticamente a la página de análisis
-    st.switch_page("pages/2_📊_ficha_analisis.py")
+    st.switch_page("pages/2_📊_Ficha_Analisis.py")
