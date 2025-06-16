@@ -1,4 +1,3 @@
-# Página: Historial del Usuario
 
 import streamlit as st
 import pandas as pd
@@ -15,6 +14,37 @@ st.set_page_config(page_title="Mis Proyectos", layout="wide")
 
 st.title("📁 Mis Proyectos")
 st.markdown("Resumen general de tus inversiones activas con indicadores clave y progreso de ejecución.")
+
+# --- EJEMPLO: Lista de proyectos, reemplaza con tus datos reales o conéctalo a la base de datos ---
+proyectos = [
+    {
+        "Proyecto": "Edificio Central",
+        "Tipo": "Construcción",
+        "Ciudad": "Bogotá",
+        "Estado": "En progreso",
+        "Inversión Total": 500000000,
+        "Avance Presupuestal": 60,
+    },
+    {
+        "Proyecto": "Parque Solar",
+        "Tipo": "Energía",
+        "Ciudad": "Medellín",
+        "Estado": "Planificado",
+        "Inversión Total": 300000000,
+        "Avance Presupuestal": 20,
+    },
+    {
+        "Proyecto": "Residencial Sur",
+        "Tipo": "Vivienda",
+        "Ciudad": "Cali",
+        "Estado": "Terminado",
+        "Inversión Total": 200000000,
+        "Avance Presupuestal": 100,
+    },
+    # Puedes agregar más proyectos aquí o cargar desde una base de datos
+]
+
+df = pd.DataFrame(proyectos)
 
 # --- Mostrar fichas de proyectos en una sola columna ---
 for proyecto in proyectos:
@@ -41,39 +71,3 @@ for proyecto in proyectos:
             </div>
             """,
             unsafe_allow_html=True
-        )
-
-st.markdown("---")
-st.markdown("Haz clic en un proyecto para ver su ficha completa de avance y análisis financiero. (Próximamente)")
-
-# --- Vista de tabla breve ---
-with st.expander("📋 Ver tabla resumen"):
-    st.dataframe(df.style.format({"Inversión Total": "${:,.0f}", "Avance Presupuestal": "{:.0f}%"}))
-
-# --- Gráfico de barras de avance presupuestal ---
-st.subheader("Estado de Proyecto")
-
-fig, ax = plt.subplots(figsize=(10, 4))
-bars = ax.barh(df["Proyecto"], df["Avance Presupuestal"], color=COLOR_BARRA)
-
-ax.set_xlabel("Avance Presupuestal (%)", color=COLOR_TEXTO)
-ax.set_xlim(0, 100)
-ax.set_title("Progreso de Ejecución por Proyecto", fontsize=14, color=COLOR_TEXTO)
-ax.xaxis.set_major_formatter(ticker.PercentFormatter())
-
-# Etiquetas sobre barras
-for bar in bars:
-    width = bar.get_width()
-    ax.text(width + 1, bar.get_y() + bar.get_height() / 2,
-            f'{width:.0f}%', va='center', color=COLOR_TEXTO, fontsize=10)
-
-ax.tick_params(axis='y', colors=COLOR_TEXTO)
-ax.tick_params(axis='x', colors=COLOR_TEXTO)
-fig.patch.set_facecolor(COLOR_FONDO)
-ax.set_facecolor("white")
-
-st.pyplot(fig)
-
-# --- Placeholder para vincular con vistas detalladas ---
-st.markdown("---")
-st.markdown("Haz clic en un proyecto para ver su ficha completa de avance y análisis financiero. (Próximamente)")
