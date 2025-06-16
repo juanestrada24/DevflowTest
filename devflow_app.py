@@ -34,7 +34,16 @@ st.markdown("""
             margin-bottom: 2em;
             font-weight: 400;
         }
-        /* NO ocultar el menú lateral para que aparezcan las páginas */
+        .center-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 2em;
+            margin-bottom: 2em;
+        }
+        .stButton>button {
+            font-size: 1.1rem;
+            padding: 0.5em 2em;
+        }
     </style>
 """, unsafe_allow_html=True)
 
@@ -54,7 +63,33 @@ Real Estate Deals Underwriting On The Go <br>
 """
 st.markdown(f'<div class="intro-text">{intro}</div>', unsafe_allow_html=True)
 
-# Formulario de entrada
+# -------------------------------
+# Botones principales centrados
+# -------------------------------
+
+st.markdown('<div class="center-buttons">', unsafe_allow_html=True)
+col1, col2, col3 = st.columns(3, gap="large")
+
+with col1:
+    if st.button("Check Deal"):
+        # Aquí deberías usar st.switch_page("pages/new_flip.py") si tienes multipágina,
+        # o podrías usar st.experimental_set_query_params o mostrar un mensaje temporal
+        st.session_state['page'] = 'new_flip'
+        st.success("Ir a 'New Flip' (aún no implementado)")
+
+with col2:
+    if st.button("Login"):
+        st.session_state['page'] = 'login'
+        st.info("Redirigir a login (aún no implementado)")
+
+with col3:
+    if st.button("Crear cuenta"):
+        st.session_state['page'] = 'register'
+        st.info("Redirigir a registro (aún no implementado)")
+
+st.markdown('</div>', unsafe_allow_html=True)
+
+# Formulario de entrada en el sidebar (lo dejamos igual)
 st.sidebar.header("📋 Datos del Proyecto")
 with st.sidebar.form("project_form"):
     direccion = st.text_input("Dirección del proyecto")
@@ -72,7 +107,7 @@ with st.sidebar.form("project_form"):
 
     submitted = st.form_submit_button("Analizar proyecto")
 
-# Procesamiento y resultados
+# Procesamiento y resultados (igual)
 if submitted:
     # Cálculos principales
     comision_total = arv * (comision / 100)
