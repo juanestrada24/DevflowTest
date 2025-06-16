@@ -54,9 +54,9 @@ for proyecto in proyectos:
                 border-radius: 10px;
                 background: #F4F4F4;
                 box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-                padding: 1.5rem 1.5rem 1rem 1.5rem;
+                padding: 0.75rem 1.5rem 1rem 1.5rem;
                 margin-bottom: 1.5rem;
-                border: 2px solid #FF6B35;
+                border: 2px solid #003366;
             '>
                 <h3 style='color:#0A1F44'>{proyecto["Proyecto"]}</h3>
                 <ul style='padding-left:1.2em; color:#0A1F44;'>
