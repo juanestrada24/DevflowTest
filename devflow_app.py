@@ -1,6 +1,7 @@
 # DevFlow App - Página Principal
 import streamlit as st
 import pandas as pd
+import sqlite3
 
 # Configuración de la página
 st.set_page_config(
@@ -114,8 +115,7 @@ if submitted:
     interes_prestamo = financiado * (tasa_prestamo / 100) * (meses / 12)
     interes_gap = gap * (tasa_gap / 100) * (meses / 12)
     gastos_cierre_val = precio_compra * (gastos_cierre / 100)
-   
-    import sqlite3
+
 
 def crear_base_datos():
     conn = sqlite3.connect('users.db')
