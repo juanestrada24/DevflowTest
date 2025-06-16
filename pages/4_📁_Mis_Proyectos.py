@@ -6,13 +6,11 @@ COLOR_BARRA = "#FF6B35"
 COLOR_TEXTO = "#0A1F44"
 COLOR_FONDO = "#F4F4F4"
 
-# Configuración de página
 st.set_page_config(page_title="Mis Proyectos", layout="wide")
 
 st.title("📁 Mis Proyectos")
 st.markdown("Resumen general de tus inversiones activas con indicadores clave y progreso de ejecución.")
 
-# --- EJEMPLO: Lista de proyectos ---
 proyectos = [
     {
         "Proyecto": "Edificio Central",
@@ -40,9 +38,6 @@ proyectos = [
     },
 ]
 
-df = pd.DataFrame(proyectos)
-
-# --- Mostrar fichas de proyectos en una sola columna ---
 for proyecto in proyectos:
     with st.container():
         st.markdown(
@@ -57,10 +52,10 @@ for proyecto in proyectos:
             '>
                 <h3 style='color:#0A1F44'>{proyecto["Proyecto"]}</h3>
                 <div style='color:#0A1F44; font-size:1.1rem; margin-bottom:0.5rem;'>
-                    <b>Tipo:</b> {proyecto["Tipo"]} |
-                    <b>Ciudad:</b> {proyecto["Ciudad"]} |
-                    <b>Estado:</b> {proyecto["Estado"]} |
-                    <b>Inversión Total:</b> ${proyecto["Inversión Total"]:,.0f} |
+                    <b>Tipo:</b> {proyecto["Tipo"]} &nbsp;|&nbsp;
+                    <b>Ciudad:</b> {proyecto["Ciudad"]} &nbsp;|&nbsp;
+                    <b>Estado:</b> {proyecto["Estado"]} &nbsp;|&nbsp;
+                    <b>Inversión Total:</b> ${proyecto["Inversión Total"]:,.0f} &nbsp;|&nbsp;
                     <b>Avance Presupuestal:</b> {proyecto["Avance Presupuestal"]}%
                 </div>
                 <div style='background:#FF6B35;height:18px;border-radius:6px;width:{proyecto["Avance Presupuestal"]}%;max-width:100%;margin-bottom:0.5rem;'></div>
