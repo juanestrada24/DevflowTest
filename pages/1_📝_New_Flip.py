@@ -4,7 +4,6 @@ import streamlit as st
 st.set_page_config(page_title="New Flip", layout="wide")
 st.title("New Flip")  # o el texto que uses como título principal
 import streamlit as st
-
 # --- ESTILO DARK UI CORPORATIVO ---
 st.markdown(
     """
