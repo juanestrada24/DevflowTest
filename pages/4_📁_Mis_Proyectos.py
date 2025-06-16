@@ -45,28 +45,32 @@ proyectos = [
 
 df = pd.DataFrame(proyectos)
 
-# --- Mostrar fichas de proyectos en una sola columna ---
+# --- Mostrar fichas de proyectos en una sola columna con dos columnas internas para los textos ---
 for proyecto in proyectos:
     with st.container():
         st.markdown(
             f"""
             <div style='
                 border-radius: 10px;
-                background: #F4F4F4;
+                background: {COLOR_FONDO};
                 box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-                padding: 0.75rem 1.5rem 1rem 1.5rem;
-                margin-bottom: 1.5rem;
-                border: 2px solid #003366;
+                padding: 0.75rem 1rem 0.5rem 1rem;
+                margin-bottom: 1rem;
+                border: 2px solid {COLOR_BARRA};
             '>
-                <h3 style='color:#0A1F44'>{proyecto["Proyecto"]}</h3>
-                <ul style='padding-left:1.2em; color:#0A1F44;'>
-                    <li><b>Tipo:</b> {proyecto["Tipo"]}</li>
-                    <li><b>Ciudad:</b> {proyecto["Ciudad"]}</li>
-                    <li><b>Estado:</b> {proyecto["Estado"]}</li>
-                    <li><b>Inversión Total:</b> ${proyecto["Inversión Total"]:,.0f}</li>
-                    <li><b>Avance Presupuestal:</b> {proyecto["Avance Presupuestal"]}%</li>
-                </ul>
-                <div style='background:#FF6B35;height:18px;border-radius:6px;width:{proyecto["Avance Presupuestal"]}%;max-width:100%;margin-bottom:0.5rem;'></div>
+                <h3 style='color:{COLOR_TEXTO}'>{proyecto["Proyecto"]}</h3>
+                <div style='display: flex; gap: 2rem;'>
+                  <ul style='padding-left:1.2em; color:{COLOR_TEXTO}; flex: 1; list-style: none; margin: 0;'>
+                      <li><b>Tipo:</b> {proyecto["Tipo"]}</li>
+                      <li><b>Ciudad:</b> {proyecto["Ciudad"]}</li>
+                  </ul>
+                  <ul style='padding-left:1.2em; color:{COLOR_TEXTO}; flex: 1; list-style: none; margin: 0;'>
+                      <li><b>Estado:</b> {proyecto["Estado"]}</li>
+                      <li><b>Inversión Total:</b> ${proyecto["Inversión Total"]:,.0f}</li>
+                      <li><b>Avance Presupuestal:</b> {proyecto["Avance Presupuestal"]}%</li>
+                  </ul>
+                </div>
+                <div style='background:{COLOR_BARRA};height:14px;border-radius:6px;width:{proyecto["Avance Presupuestal"]}%;max-width:100%;margin-bottom:0.5rem;'></div>
             </div>
             """,
             unsafe_allow_html=True
