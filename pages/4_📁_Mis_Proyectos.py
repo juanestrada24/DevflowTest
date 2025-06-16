@@ -13,16 +13,16 @@ st.markdown("Resumen general de tus inversiones activas con indicadores clave y 
 
 proyectos = [
     {
-        "Proyecto": "Edificio Central",
-        "Tipo": "Construcción",
-        "Ciudad": "Bogotá",
+        "Proyecto": "145 SE 25TH RD",
+        "Tipo": "Flip",
+        "Ciudad": "Miami",
         "Estado": "En progreso",
         "Inversión Total": 500000000,
         "Avance Presupuestal": 60,
     },
     {
-        "Proyecto": "Parque Solar",
-        "Tipo": "Energía",
+        "Proyecto": "Brickell 25",
+        "Tipo": "New Construction",
         "Ciudad": "Medellín",
         "Estado": "Planificado",
         "Inversión Total": 300000000,
