@@ -1,1 +1,52 @@
-
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registro</title>
+</head>
+<body>
+    <h2>Registrarse</h2>
+    <form method="post">
+        <label>Email:</label><br>
+        <input type="email" name="email" required><br>
+        <label>Contraseña:</label><br>
+        <input type="password" name="password" required><br><br>
+        <input type="submit" value="Registrarse">
+    </form>
+    <p>¿Ya tienes cuenta? <a href="{{ url_for('login') }}">Inicia sesión aquí</a></p>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul>
+        {% for category, message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+</body>
+</html>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Iniciar Sesión</title>
+</head>
+<body>
+    <h2>Iniciar Sesión</h2>
+    <form method="post">
+        <label>Email:</label><br>
+        <input type="email" name="email" required><br>
+        <label>Contraseña:</label><br>
+        <input type="password" name="password" required><br><br>
+        <input type="submit" value="Entrar">
+    </form>
+    <p>¿No tienes cuenta? <a href="{{ url_for('register') }}">Regístrate aquí</a></p>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul>
+        {% for category, message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+</body>
+</html>
