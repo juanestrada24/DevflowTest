@@ -72,7 +72,7 @@ col1, col2, col3 = st.columns(3, gap="large")
 
 with col1:
     if st.button("Check Deal"):
-        st.switch_page("pages/new_flip.py")
+        st.switch_page("pages/1_📝_New_Flip.py")
 with col2:
     if st.button("Login"):
         st.session_state['page'] = 'login'
