@@ -72,11 +72,7 @@ col1, col2, col3 = st.columns(3, gap="large")
 
 with col1:
     if st.button("Check Deal"):
-        # Aquí deberías usar st.switch_page("pages/new_flip.py") si tienes multipágina,
-        # o podrías usar st.experimental_set_query_params o mostrar un mensaje temporal
-        st.session_state['page'] = 'new_flip'
-        st.success("Ir a 'New Flip' (aún no implementado)")
-
+        st.switch_page("pages/new_flip.py")
 with col2:
     if st.button("Login"):
         st.session_state['page'] = 'login'
