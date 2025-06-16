@@ -16,3 +16,5 @@ def crear_base_datos():
 if __name__ == "__main__":
     crear_base_datos()
     print("Base de datos y tabla de usuarios creadas correctamente.")
+
+python db.py
