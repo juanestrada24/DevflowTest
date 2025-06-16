@@ -2,3 +2,4 @@ streamlit
 fpdf
 pandas
 openai
+matplotlib
