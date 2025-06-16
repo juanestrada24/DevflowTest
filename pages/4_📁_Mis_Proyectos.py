@@ -1,4 +1,3 @@
-
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -71,3 +70,4 @@ for proyecto in proyectos:
             </div>
             """,
             unsafe_allow_html=True
+        )
