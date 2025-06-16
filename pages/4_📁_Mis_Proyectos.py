@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 
 # Colores de DevFlow
-COLOR_BARRA = "#FF6B35"
+COLOR_BARRA = "#003366"
 COLOR_TEXTO = "#0A1F44"
 COLOR_FONDO = "#F4F4F4"
 
