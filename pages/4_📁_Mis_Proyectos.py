@@ -46,7 +46,7 @@ for proyecto in proyectos:
                 border-radius: 10px;
                 background: #F4F4F4;
                 box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-                padding: 1.5rem 2.5rem 1rem 2.5rem;
+                padding: 1rem 2rem 1rem 2rem;
                 margin-bottom: 1.5rem;
               border: 2px solid #333333;
             '>
