@@ -67,6 +67,8 @@ st.markdown(f'<div class="intro-text">{intro}</div>', unsafe_allow_html=True)
 # Botones principales centrados
 # -------------------------------
 
+import streamlit as st
+
 st.markdown('<div class="center-buttons">', unsafe_allow_html=True)
 col1, col2, col3 = st.columns(3, gap="large")
 
