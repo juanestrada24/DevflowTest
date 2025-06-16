@@ -16,42 +16,42 @@ st.set_page_config(page_title="Mis Proyectos", layout="wide")
 st.title("📁 Mis Proyectos")
 st.markdown("Resumen general de tus inversiones activas con indicadores clave y progreso de ejecución.")
 
-# --- Datos simulados (puedes conectar luego con tu base de datos o estado) ---
-proyectos = [
-    {
-        "Proyecto": "7th Ave Townhomes",
-        "Tipo": "Obra nueva",
-        "Ciudad": "Miami",
-        "Estado": "En construcción",
-        "Inversión Total": 950000,
-        "Avance Presupuestal": 65
-    },
-    {
-        "Proyecto": "Coral Gables Flip",
-        "Tipo": "Flip",
-        "Ciudad": "Coral Gables",
-        "Estado": "Comercialización",
-        "Inversión Total": 450000,
-        "Avance Presupuestal": 95
-    },
-    {
-        "Proyecto": "West Palm Warehouse",
-        "Tipo": "Distressed",
-        "Ciudad": "West Palm Beach",
-        "Estado": "Adquisición",
-        "Inversión Total": 1250000,
-        "Avance Presupuestal": 15
-    }
-]
+# --- Mostrar fichas de proyectos en una sola columna ---
+for proyecto in proyectos:
+    with st.container():
+        st.markdown(
+            f"""
+            <div style='
+                border-radius: 10px;
+                background: #F4F4F4;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+                padding: 1.5rem 1.5rem 1rem 1.5rem;
+                margin-bottom: 1.5rem;
+                border: 2px solid #FF6B35;
+            '>
+                <h3 style='color:#0A1F44'>{proyecto["Proyecto"]}</h3>
+                <ul style='padding-left:1.2em; color:#0A1F44;'>
+                    <li><b>Tipo:</b> {proyecto["Tipo"]}</li>
+                    <li><b>Ciudad:</b> {proyecto["Ciudad"]}</li>
+                    <li><b>Estado:</b> {proyecto["Estado"]}</li>
+                    <li><b>Inversión Total:</b> ${proyecto["Inversión Total"]:,.0f}</li>
+                    <li><b>Avance Presupuestal:</b> {proyecto["Avance Presupuestal"]}%</li>
+                </ul>
+                <div style='background:#FF6B35;height:18px;border-radius:6px;width:{proyecto["Avance Presupuestal"]}%;max-width:100%;margin-bottom:0.5rem;'></div>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
 
-df = pd.DataFrame(proyectos)
+st.markdown("---")
+st.markdown("Haz clic en un proyecto para ver su ficha completa de avance y análisis financiero. (Próximamente)")
 
 # --- Vista de tabla breve ---
 with st.expander("📋 Ver tabla resumen"):
     st.dataframe(df.style.format({"Inversión Total": "${:,.0f}", "Avance Presupuestal": "{:.0f}%"}))
 
 # --- Gráfico de barras de avance presupuestal ---
-st.subheader("📊 Avance de Presupuesto por Proyecto")
+st.subheader("Estado de Proyecto")
 
 fig, ax = plt.subplots(figsize=(10, 4))
 bars = ax.barh(df["Proyecto"], df["Avance Presupuestal"], color=COLOR_BARRA)
