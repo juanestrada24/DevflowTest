@@ -1,5 +1,4 @@
 # Página: Historial del Usuario
-# pages/1_📁_Mis_Proyectos.py
 
 import streamlit as st
 import pandas as pd
