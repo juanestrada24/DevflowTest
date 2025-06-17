@@ -113,20 +113,3 @@ if submitted:
     interes_gap = gap * (tasa_gap / 100) * (meses / 12)
     gastos_cierre_val = precio_compra * (gastos_cierre / 100)
 
-
-def crear_base_datos():
-    conn = sqlite3.connect('users.db')
-    cursor = conn.cursor()
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS users (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            email TEXT UNIQUE NOT NULL,
-            password TEXT NOT NULL
-        )
-    ''')
-    conn.commit()
-    conn.close()
-
-if __name__ == "__main__":
-    crear_base_datos()
-    print("Base de datos y tabla de usuarios creadas correctamente.")
