@@ -1,51 +1,76 @@
-# 6_let's_build.py
+# pages/6_let’s_build.py
 
 import streamlit as st
 import openai
 
-# --- Configuración inicial ---
-st.set_page_config(page_title="Análisis Conversacional de Flips", layout="wide")
+# --- Configuración de la página ---
+st.set_page_config(page_title="Let’s Build – Análisis Conversacional", layout="wide")
 
-# --- Clave de API (cargarla desde secrets o entorno) ---
-openai.api_key = st.secrets["OPENAI_API_KEY"]  # asegúrate de tenerla en .streamlit/secrets.toml
+# --- Clave API desde secrets ---
+openai.api_key = st.secrets["OPENAI_API_KEY"]
 
-# --- Título de la app ---
-st.title("Análisis Conversacional de un Flip")
+# --- Título ---
+st.title("🏗️ Let’s Build")
+st.subheader("Describe tu operación inmobiliaria en lenguaje natural y analizamos los KPIs del flip.")
 
-# --- Campo de texto conversacional ---
-user_input = st.text_area("Describe tu operación inmobiliaria:", height=150)
+# --- Input del usuario ---
+user_input = st.text_area(
+    "✍️ Describe tu flip inmobiliario (compra, renovación, ARV, tiempo, etc.):",
+    placeholder="Ej: Estoy comprando una casa por $350,000, planeo renovarla por $45,000 y venderla por $520,000. Tomará 6 meses...",
+    height=180
+)
 
-# --- Botón para procesar ---
-if st.button("Analizar"):
-    if not user_input:
-        st.warning("Por favor ingresa una descripción.")
+# --- Botón de análisis ---
+if st.button("🔍 Analizar Flip"):
+    if not user_input.strip():
+        st.warning("Por favor ingresa una descripción para analizar.")
     else:
-        with st.spinner("Procesando..."):
+        with st.spinner("Procesando análisis..."):
 
+            # --- Prompt a OpenAI ---
             prompt = f"""
-Extrae los siguientes campos desde esta descripción de texto sobre una inversión de flipping inmobiliario:
-- precio_compra
-- renovacion
-- arv
-- comision_venta (porcentaje si se menciona)
-- tiempo_proyecto (en meses si se menciona)
+Eres un analista financiero de flips inmobiliarios. A partir de la siguiente descripción, extrae los siguientes campos:
+
+- precio_compra (USD)
+- renovacion (USD)
+- arv (USD)
+- comision_venta (porcentaje, asume 6% si no se menciona)
+- tiempo_proyecto (en meses, asume 6 si no se menciona)
 
 Luego calcula:
-- ROI
-- upside
-- equity_multiple
+- utilidad_bruta = arv - (precio_compra + renovacion + comision_venta)
+- ROI = utilidad_bruta / (precio_compra + renovacion)
+- equity_multiple = arv / (precio_compra + renovacion)
+
+Devuelve un diccionario de Python como este ejemplo:
+{{
+  "precio_compra": 350000,
+  "renovacion": 45000,
+  "arv": 520000,
+  "comision_venta": 31200,
+  "tiempo_proyecto_meses": 6,
+  "utilidad_bruta": 93800,
+  "ROI": 0.22,
+  "equity_multiple": 1.22
+}}
 
 Descripción:
 \"\"\"{user_input}\"\"\"
-
-Devuelve solo un diccionario de Python con los valores numéricos calculados y extraídos.
 """
 
-            response = openai.ChatCompletion.create(
-                model="gpt-4",
-                messages=[{"role": "user", "content": prompt}],
-                temperature=0
-            )
+            # --- Llamada a OpenAI ---
+            try:
+                response = openai.ChatCompletion.create(
+                    model="gpt-4",
+                    messages=[{"role": "user", "content": prompt}],
+                    temperature=0.2
+                )
 
-            result = response["choices"][0]["message"]["content"]
-            st.code(result, language="python")
+                result = response["choices"][0]["message"]["content"]
+
+                # --- Mostrar resultado ---
+                st.success("✅ Análisis generado")
+                st.code(result, language="python")
+
+            except Exception as e:
+                st.error(f"❌ Error al generar análisis: {str(e)}")
