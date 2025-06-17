@@ -1,11 +1,10 @@
 # Página: Nuevo Proyecto (Underwriting)
-# Página: Nuevo Proyecto (Underwriting)
 import streamlit as st
 
 st.set_page_config(page_title="New Flip", layout="wide")
 st.title("New Flip")  # o el texto que uses como título principal
-import streamlit as st
-# --- ESTILO DARK UI CORPORATIVO ---
+
+# --- ESTILO: ANCHO MÓVIL ---
 st.markdown(
     """
     <style>
@@ -47,6 +46,32 @@ st.markdown(
         }
         .stForm {
             background: none !important;
+        }
+        /* ---- ESTILOS EXTRA PARA MOBILE ---- */
+        @media (max-width: 800px) {
+            .block-container {
+                padding-left: 0.5rem !important;
+                padding-right: 0.5rem !important;
+                max-width: 100vw !important;
+            }
+            .stTextInput input, .stNumberInput input {
+                min-width: 92vw !important;
+                max-width: 98vw !important;
+                font-size: 18px !important;
+                padding: 14px !important;
+            }
+            .stButton>button {
+                min-width: 90vw !important;
+                max-width: 98vw !important;
+                font-size: 19px !important;
+                padding: 16px 0 !important;
+            }
+            .stNumberInput, .stTextInput, .stForm {
+                width: 100% !important;
+            }
+            label {
+                font-size: 17px !important;
+            }
         }
     </style>
     """,
