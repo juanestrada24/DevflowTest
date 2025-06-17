@@ -190,6 +190,52 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
+# --- NUEVA TABLA DE INDICADORES DE OPERACIÓN ---
+
+# 1. CAP Rate
+if renta_mensual > 0 and ocupacion > 0:
+    cap_rate = (renta_mensual * 12 * (ocupacion / 100)) / (precio_compra + renovacion)
+else:
+    cap_rate = None
+
+# 2. Spread
+if arv > 0 and total_costos > 0:
+    spread = (arv - total_costos) / arv
+else:
+    spread = None
+
+# 3. DSCR
+interes_prestamo_anual = monto_prestamo * (tasa_prestamo / 100)
+if renta_mensual > 0 and monto_prestamo > 0 and interes_prestamo_anual > 0 and ocupacion > 0:
+    dscr = (renta_mensual * 12 * (ocupacion / 100)) / interes_prestamo_anual
+else:
+    dscr = None
+
+# 4. Velocidad de absorción del barrio (sin dato)
+absorcion = None
+
+st.subheader("📈 Indicadores de Operación")
+
+st.markdown(f"""
+<table class="table-style">
+<tr>
+    <td>CAP Rate (si se alquila)</td>
+    <td>{f"{cap_rate:.2%}" if cap_rate is not None else ""}</td>
+</tr>
+<tr>
+    <td>Spread (margen entre ARV y costos totales)</td>
+    <td>{f"{spread:.2%}" if spread is not None else ""}</td>
+</tr>
+<tr>
+    <td>DSCR</td>
+    <td>{f"{dscr:.2f}" if dscr is not None else ""}</td>
+</tr>
+<tr>
+    <td>Velocidad de absorción del barrio</td>
+    <td></td>
+</tr>
+</table>
+""", unsafe_allow_html=True)
 
 # --- Botones de acción ---
 col_a, col_b = st.columns([2, 2])
