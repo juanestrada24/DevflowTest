@@ -98,7 +98,7 @@ with st.form(key="form_nuevo_proyecto"):
         gastos_cierre = st.number_input("Gastos de cierre (%)", min_value=0.0, max_value=10.0, value=1.5, step=0.1)
 
     with col3:
-       
+        downpayment = st.number_input("Downpayment", min_value=0.0, value=0.0, step=1000.0, format="%.2f")
         tasa_gap = st.number_input("Tasa preferente del GAP investor (%)", min_value=0.0, max_value=20.0, value=10.0, step=0.5)
         renta_mensual = st.number_input("Renta mensual esperada", min_value=0.0, value=0.0, step=100.0)
         ocupacion = st.number_input("Ocupación estimada (%)", min_value=0.0, max_value=100.0, value=0.0, step=1.0)
