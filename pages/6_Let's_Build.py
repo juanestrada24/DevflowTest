@@ -42,7 +42,7 @@ if st.session_state.conv_flip_ongoing and i < len(campos):
     if st.button("Siguiente"):
         st.session_state.conv_flip_data[campo["key"]] = respuesta
         st.session_state.conv_flip_i += 1
-        st.experimental_rerun()
+        st.rerun()
 elif st.session_state.conv_flip_ongoing:
     st.success("¡Datos ingresados exitosamente!")
     st.write("Resumen de tus respuestas:")
@@ -54,11 +54,11 @@ elif st.session_state.conv_flip_ongoing:
     if st.button("Volver a empezar"):
         st.session_state.conv_flip_i = 0
         st.session_state.conv_flip_data = {}
-        st.experimental_rerun()
+        st.rerun()
 else:
     st.success("¡Flujo completado!")
     if st.button("Reiniciar"):
         st.session_state.conv_flip_ongoing = True
         st.session_state.conv_flip_i = 0
         st.session_state.conv_flip_data = {}
-        st.experimental_rerun()
+        st.rerun()
