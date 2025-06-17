@@ -1,21 +1,20 @@
 # pages/6_let’s_build.py
-
 import streamlit as st
 import openai
 
 # --- Configuración de la página ---
 st.set_page_config(page_title="Let’s Build – Análisis Conversacional", layout="wide")
 
-# --- Clave API desde secrets ---
-openai.api_key = st.secrets["OPENAI_API_KEY"]
+# --- Clave API desde secrets o variable de entorno ---
+openai.api_key = st.secrets.get("OPENAI_API_KEY", "")
 
 # --- Título ---
 st.title("🏗️ Let’s Build")
 st.subheader("Describe tu operación inmobiliaria en lenguaje natural y analizamos los KPIs del flip.")
 
-# --- Input del usuario ---
+# --- Input del usuario (campo completamente abierto) ---
 user_input = st.text_area(
-    "✍️ Describe tu flip inmobiliario (compra, renovación, ARV, tiempo, etc.):",
+    "✍️ Describe tu flip inmobiliario (puedes escribir completamente libre, sin formato):",
     placeholder="Ej: Estoy comprando una casa por $350,000, planeo renovarla por $45,000 y venderla por $520,000. Tomará 6 meses...",
     height=180
 )
