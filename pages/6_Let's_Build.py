@@ -1,4 +1,4 @@
-# app.py
+# 6_let's_build.py
 
 import streamlit as st
 import openai
