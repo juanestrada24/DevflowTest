@@ -3,79 +3,75 @@ import streamlit as st
 st.set_page_config(page_title="Conversacional Flip", layout="wide")
 st.title("Flip conversacional 🤖")
 
-# Configuración de los campos y sus tipos
 campos = [
-    {"key": "precio_compra", "label": "¿Cuál es el precio de compra?", "type": float, "value": 500000.0},
-    {"key": "arv", "label": "¿Cuál es el ARV (valor tras renovación)?", "type": float, "value": 700000.0},
-    {"key": "renovacion", "label": "¿Cuál es el costo de renovación?", "type": float, "value": 50000.0},
-    {"key": "comision", "label": "¿Cuál es la comisión de venta (%)?", "type": float, "value": 5.0},
-    {"key": "tasa_prestamo", "label": "¿Cuál es la tasa préstamo anual (%)?", "type": float, "value": 12.0},
-    {"key": "porcentaje_financiado", "label": "¿Qué porcentaje es financiado por lender?", "type": float, "value": 70.0},
-    {"key": "tasa_gap", "label": "¿Cuál es la tasa preferente del GAP investor (%)?", "type": float, "value": 10.0},
-    {"key": "meses", "label": "¿Cuál es la duración del proyecto (meses)?", "type": int, "value": 4},
-    {"key": "renta_mensual", "label": "¿Cuál es la renta mensual esperada?", "type": float, "value": 0.0},
-    {"key": "ocupacion", "label": "¿Cuál es la ocupación estimada (%)?", "type": float, "value": 0.0},
-    {"key": "gastos_cierre", "label": "¿Cuáles son los gastos de cierre (%)?", "type": float, "value": 1.5},
+    {"key": "precio_compra", "label": "Precio de compra", "type": float, "value": 500000.0},
+    {"key": "arv", "label": "ARV (valor tras renovación)", "type": float, "value": 700000.0},
+    {"key": "renovacion", "label": "Costo de renovación", "type": float, "value": 50000.0},
+    {"key": "comision", "label": "Comisión de venta (%)", "type": float, "value": 5.0},
+    {"key": "tasa_prestamo", "label": "Tasa préstamo anual (%)", "type": float, "value": 12.0},
+    {"key": "porcentaje_financiado", "label": "Porcentaje financiado por lender", "type": float, "value": 70.0},
+    {"key": "tasa_gap", "label": "Tasa preferente del GAP investor (%)", "type": float, "value": 10.0},
+    {"key": "meses", "label": "Duración del proyecto (meses)", "type": int, "value": 4},
+    {"key": "renta_mensual", "label": "Renta mensual esperada", "type": float, "value": 0.0},
+    {"key": "ocupacion", "label": "Ocupación estimada (%)", "type": float, "value": 0.0},
+    {"key": "gastos_cierre", "label": "Gastos de cierre (%)", "type": float, "value": 1.5},
 ]
 
-# Estados de la conversación y respuestas
-if "conv_flip_i" not in st.session_state:
-    st.session_state.conv_flip_i = 0
+# Mostrar instrucciones y formato esperado
+st.write("Por favor, ingresa todos los valores separados por coma, en el mismo orden que se muestra a continuación:")
+for idx, campo in enumerate(campos):
+    st.write(f"{idx+1}. **{campo['label']}** (ejemplo: {campo['value']})")
+
+ejemplo = ", ".join(str(campo["value"]) for campo in campos)
+st.info(f"Ejemplo: {ejemplo}")
+
 if "conv_flip_data" not in st.session_state:
     st.session_state.conv_flip_data = {}
-if "conv_flip_chat" not in st.session_state:
-    st.session_state.conv_flip_chat = []
+if "conv_flip_done" not in st.session_state:
+    st.session_state.conv_flip_done = False
 
-i = st.session_state.conv_flip_i
+# Solo pide los datos si aún no se ingresaron correctamente
+if not st.session_state.conv_flip_done:
+    user_input = st.text_area(
+        "Pega o escribe los valores separados por coma",
+        value="",
+        key="multi_campo_input",
+        placeholder=ejemplo
+    )
+    if st.button("Enviar datos"):
+        valores = [v.strip() for v in user_input.split(",")]
+        if len(valores) != len(campos):
+            st.error(f"Debes ingresar exactamente {len(campos)} valores, separados por coma.")
+        else:
+            datos = {}
+            errores = []
+            for idx, campo in enumerate(campos):
+                try:
+                    valor = campo["type"](valores[idx])
+                    datos[campo["key"]] = valor
+                except Exception:
+                    errores.append(f"{campo['label']} ('{valores[idx]}')")
 
-# Función para mostrar el historial de chat
-def mostrar_chat():
-    for entrada in st.session_state.conv_flip_chat:
-        st.chat_message(entrada["role"]).write(entrada["content"])
-
-# Lógica conversacional tipo chat
-if i < len(campos):
-    campo = campos[i]
-    # Mensaje del sistema (pregunta)
-    if len(st.session_state.conv_flip_chat) == 0 or st.session_state.conv_flip_chat[-1]["role"] == "user":
-        st.session_state.conv_flip_chat.append({"role": "assistant", "content": campo["label"]})
-    mostrar_chat()
-    user_input = st.chat_input("Escribe tu respuesta y presiona Enter...")
-
-    if user_input is not None:
-        # Agrega la respuesta del usuario al chat
-        st.session_state.conv_flip_chat.append({"role": "user", "content": user_input})
-        # Valida el tipo de dato
-        try:
-            if campo['type'] == int:
-                respuesta = int(user_input)
+            if errores:
+                st.error(f"Revisa estos campos: {', '.join(errores)}. Asegúrate de que sean del tipo correcto (número entero o decimal).")
             else:
-                respuesta = float(user_input)
-            st.session_state.conv_flip_data[campo["key"]] = respuesta
-            st.session_state.conv_flip_i += 1
-            st.rerun()
-        except Exception:
-            st.session_state.conv_flip_chat.append(
-                {"role": "assistant", "content": "❗ Por favor ingresa un valor numérico válido."}
-            )
-            st.rerun()
+                st.session_state.conv_flip_data = datos
+                st.session_state.conv_flip_done = True
+                st.success("¡Datos ingresados exitosamente!")
+                st.rerun()
 else:
-    # Mostrar historial y resumen final
-    mostrar_chat()
-    st.chat_message("assistant").success("¡Datos ingresados exitosamente! 🎉")
-    st.chat_message("assistant").write("Resumen de tus respuestas:")
-    st.chat_message("assistant").json(st.session_state.conv_flip_data)
+    st.success("¡Datos ingresados exitosamente!")
+    st.write("Resumen de tus respuestas:")
+    st.json(st.session_state.conv_flip_data)
     col1, col2 = st.columns(2)
     with col1:
         if st.button("Enviar datos y continuar"):
             st.session_state["inputs"] = st.session_state.conv_flip_data
-            st.session_state.conv_flip_i = 0
             st.session_state.conv_flip_data = {}
-            st.session_state.conv_flip_chat = []
+            st.session_state.conv_flip_done = False
             st.switch_page("pages/2_📊_Ficha_Analisis.py")
     with col2:
         if st.button("Volver a empezar"):
-            st.session_state.conv_flip_i = 0
             st.session_state.conv_flip_data = {}
-            st.session_state.conv_flip_chat = []
+            st.session_state.conv_flip_done = False
             st.rerun()
