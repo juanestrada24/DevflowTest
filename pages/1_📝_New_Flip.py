@@ -1,116 +1,97 @@
 # Página: Nuevo Proyecto (Underwriting)
+# Página: Nuevo Proyecto (Underwriting)
 import streamlit as st
-from openai import OpenAI
-import openai
 
-# --- Configuración de la página ---
-st.set_page_config(page_title="Let’s Build – Asistente de Flip", layout="wide")
-
-# --- CSS para mejorar ancho en móvil ---
-st.markdown("""
+st.set_page_config(page_title="New Flip", layout="wide")
+st.title("New Flip")  # o el texto que uses como título principal
+import streamlit as st
+# --- ESTILO DARK UI CORPORATIVO ---
+st.markdown(
+    """
     <style>
-    /* Contenedor principal más ancho en móvil */
-    @media (max-width: 800px) {
-        .main .block-container {
-            padding-left: 0.5rem !important;
-            padding-right: 0.5rem !important;
-            max-width: 98vw !important;
+        body {
+            background-color: #0A1626 !important;
         }
-        /* Área de texto más ancha */
-        textarea {
-            min-width: 90vw !important;
-            max-width: 98vw !important;
+        .block-container {
+            padding: 2rem 4rem;
+            background-color: #0A1626;
+            color: #F4F7FA;
+            border-radius: 12px;
         }
-        /* Botón más ancho */
-        button[kind="secondary"], button[kind="primary"] {
-            min-width: 90vw !important;
-            max-width: 98vw !important;
+        .stTextInput input, .stNumberInput input {
+            background-color: #14233A;
+            color: #F4F7FA;
+            border-radius: 6px;
+            border: 1.5px solid #2A4066;
+            font-size: 16px;
         }
-        /* Ajuste de las cajas de alerta para que no queden pegadas */
-        .stAlert {
-            margin-left: 0.5rem;
-            margin-right: 0.5rem;
+        .stNumberInput label, .stTextInput label {
+            color: #F4F7FA;
+            font-weight: 600;
         }
-    }
+        .stButton>button {
+            background-color: #1251A0;
+            color: #F4F7FA;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 8px;
+            font-size: 17px;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+        .stButton>button:hover {
+            background-color: #1877D2;
+        }
+        h1, h2, h3, h4, h5, h6, p, label {
+            color: #F4F7FA;
+        }
+        .stForm {
+            background: none !important;
+        }
     </style>
-""", unsafe_allow_html=True)
-
-# --- Inicializar cliente OpenAI con tu API Key desde secrets.toml ---
-try:
-    client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
-except KeyError:
-    st.error("❌ No se encontró la clave 'OPENAI_API_KEY'. Agrega tu API key en .streamlit/secrets.toml o en los secrets de Streamlit Cloud.")
-    st.stop()
-
-# --- Título e instrucciones ---
-st.title("🏗️ Let’s Build")
-st.subheader("Describe tu operación de flip y recibe KPIs automáticamente.")
-
-st.markdown("""
-Escribe en lenguaje natural los detalles de tu inversión inmobiliaria (compra, renovación, ARV, duración, comisión, etc.)  
-y este asistente extraerá los valores clave y calculará los principales KPIs financieros como ROI, utilidad y múltiplo de equity.
-""")
-
-# --- Campo de entrada ---
-user_input = st.text_area(
-    "✍️ Describe tu operación de flip:",
-    placeholder="Ej: Estoy comprando una casa por $385,000, renovándola con $45,000 y la vendo por $510,000 en 5 meses...",
-    height=180
+    """,
+    unsafe_allow_html=True
 )
 
-# --- Botón para analizar ---
-if st.button("🔍 Analizar Flip"):
-    if not user_input.strip():
-        st.warning("Por favor ingresa una descripción.")
-        st.stop()
+st.markdown("Ingresa los datos clave para evaluar la oportunidad de inversión.")
 
-    with st.spinner("Procesando..."):
+with st.form(key="form_nuevo_proyecto"):
+    st.subheader("Datos del Proyecto")
+    col1, col2, col3 = st.columns(3)
 
-        # --- Prompt para el asistente ---
-        prompt = f"""
-Eres un analista financiero especializado en flips inmobiliarios.
+    with col1:
+        precio_compra = st.number_input("Precio de compra", min_value=0.0, value=500000.0, step=1000.0, format="%.2f")
+        renovacion = st.number_input("Costo de renovación", min_value=0.0, value=50000.0, step=1000.0, format="%.2f")
+        comision = st.number_input("Comisión de venta (%)", min_value=0.0, max_value=10.0, value=5.0, step=0.1)
+        meses = st.number_input("Duración del proyecto (meses)", min_value=1, value=4, step=1)
 
-Del siguiente texto, extrae:
-- precio_compra (en USD)
-- renovacion (en USD)
-- arv (en USD)
-- comision_venta (en USD o porcentaje; si no se menciona, asume 6%)
-- tiempo_proyecto (en meses; si no se menciona, asume 6)
+    with col2:
+        arv = st.number_input("ARV (valor tras renovación)", min_value=0.0, value=700000.0, step=1000.0, format="%.2f")
+        tasa_prestamo = st.number_input("Tasa préstamo anual (%)", min_value=0.0, value=12.0, step=0.5)
+        porcentaje_financiado = st.number_input("% Financiado por lender", min_value=0.0, max_value=100.0, value=70.0, step=1.0)
+        gastos_cierre = st.number_input("Gastos de cierre (%)", min_value=0.0, max_value=10.0, value=1.5, step=0.1)
 
-Luego calcula:
-- utilidad_bruta = arv - (precio_compra + renovacion + comision_venta)
-- ROI = utilidad_bruta / (precio_compra + renovacion)
-- equity_multiple = arv / (precio_compra + renovacion)
+    with col3:
+        tasa_gap = st.number_input("Tasa preferente del GAP investor (%)", min_value=0.0, max_value=20.0, value=10.0, step=0.5)
+        renta_mensual = st.number_input("Renta mensual esperada", min_value=0.0, value=0.0, step=100.0)
+        ocupacion = st.number_input("Ocupación estimada (%)", min_value=0.0, max_value=100.0, value=0.0, step=1.0)
 
-Devuelve un diccionario de Python como este ejemplo:
-{{
-  "precio_compra": 385000,
-  "renovacion": 45000,
-  "arv": 510000,
-  "comision_venta": 30600,
-  "tiempo_proyecto_meses": 5,
-  "utilidad_bruta": 49600,
-  "ROI": 0.114,
-  "equity_multiple": 1.114
-}}
+    submit = st.form_submit_button("Check Deal")
 
-Texto:
-\"\"\"{user_input}\"\"\"
-"""
-
-        try:
-            # --- Llamada a OpenAI ---
-            response = client.chat.completions.create(
-                model="gpt-3.5-turbo",  # ✅ Compatible con todas las cuentas
-                messages=[{"role": "user", "content": prompt}],
-                temperature=0.2
-            )
-
-            result = response.choices[0].message.content
-            st.success("✅ Resultado generado")
-            st.code(result, language="python")
-
-        except openai.OpenAIError as e:
-            st.error(f"❌ Error con la API: {e}")
-        except Exception as e:
-            st.error(f"❌ Error inesperado: {e}")
+if submit:
+    # Guardar datos en session_state
+    st.session_state["inputs"] = {
+        "precio_compra": precio_compra,
+        "arv": arv,
+        "renovacion": renovacion,
+        "comision": comision,
+        "tasa_prestamo": tasa_prestamo,
+        "porcentaje_financiado": porcentaje_financiado,
+        "tasa_gap": tasa_gap,
+        "meses": meses,
+        "renta_mensual": renta_mensual,
+        "ocupacion": ocupacion,
+        "gastos_cierre": gastos_cierre
+    }
+    # Redirigir automáticamente a la página de análisis
+    st.switch_page("pages/2_📊_Ficha_Analisis.py")
