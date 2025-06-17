@@ -1,10 +1,5 @@
 # DevFlow App - Página Principal
 import streamlit as st
-st.write("Versión de Streamlit:", st.__version__)
-import pandas as pd
-import sqlite3
-
-
 # Configuración de la página
 st.set_page_config(
     page_title="DevFlow - Análisis de Proyecto",
